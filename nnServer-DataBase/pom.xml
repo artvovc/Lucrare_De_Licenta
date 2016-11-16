@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>nnServer-Util</artifactId>
+    <artifactId>nnServer-DataBase</artifactId>
 
 
 </project>

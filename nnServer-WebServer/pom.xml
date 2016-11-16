@@ -8,8 +8,9 @@
         <version>${project.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
 
-    <artifactId>nnServer-Util</artifactId>
+    <artifactId>nnServer-WebServer</artifactId>
 
 
 </project>
