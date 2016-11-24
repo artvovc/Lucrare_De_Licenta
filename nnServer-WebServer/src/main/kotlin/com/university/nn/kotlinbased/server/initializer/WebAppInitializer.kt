@@ -2,6 +2,7 @@ package com.university.nn.kotlinbased.server.initializer
 
 import com.university.nn.kotlinbased.server.config.AppContextConfig
 import com.university.nn.kotlinbased.server.config.DispatcherConfig
+import com.university.nn.kotlinbased.server.config.SecurityConfig
 import org.springframework.web.WebApplicationInitializer
 import org.springframework.web.context.ContextLoaderListener
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext
@@ -14,8 +15,8 @@ open class WebAppInitializer : WebApplicationInitializer {
     override fun onStartup(servletContext: ServletContext) {
         val rootContext = AnnotationConfigWebApplicationContext()
         rootContext.register(
-                AppContextConfig::class.java
-//                ,WebSecurityConfig::class.java
+                AppContextConfig::class.java,
+                SecurityConfig::class.java
         )
 
         servletContext.addListener(ContextLoaderListener(rootContext))
@@ -25,6 +26,6 @@ open class WebAppInitializer : WebApplicationInitializer {
 
         val dispatcher = servletContext.addServlet("dispatcher", DispatcherServlet(dispatcherContext))
         dispatcher.setLoadOnStartup(1)
-        dispatcher.addMapping("/")
+        dispatcher.addMapping("/*")
     }
 }
