@@ -17,6 +17,7 @@
 
     <properties>
         <dir>.</dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.version>1.0-SNAPSHOT</project.version>
         <kotlin.version>1.0.5-2</kotlin.version>
         <java.version>1.8</java.version>
@@ -30,6 +31,11 @@
         <swagger2.version>2.5.0</swagger2.version>
         <jackson.version>2.8.5</jackson.version>
         <spring-mongodb.version>1.9.5.RELEASE</spring-mongodb.version>
+        <junit.version>4.12</junit.version>
+        <mockito-core.version>2.2.27</mockito-core.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <surefire.version>2.19.1</surefire.version>
+        <failsafe.version>2.19.1</failsafe.version>
     </properties>
 
     <dependencyManagement>
@@ -114,6 +120,38 @@
                 <artifactId>spring-data-mongodb</artifactId>
                 <version>${spring-mongodb.version}</version>
             </dependency>
+
+            <!--TEST DEPEND-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-test</artifactId>
+                <version>${spring-security.version}</version>
+            </dependency>
+            <!--<dependency>-->
+            <!--<groupId>org.mockito</groupId>-->
+            <!--<artifactId>mockito-core</artifactId>-->
+            <!--<version>${mockito-core.version}</version>-->
+            <!--</dependency>-->
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-core</artifactId>
+                <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-library</artifactId>
+                <version>${hamcrest.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -135,7 +173,9 @@
                     <execution>
                         <id>compile</id>
                         <phase>process-sources</phase>
-                        <goals> <goal>compile</goal> </goals>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
                         <configuration>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
@@ -145,7 +185,10 @@
                     </execution>
                     <execution>
                         <id>test-compile</id>
-                        <goals> <goal>test-compile</goal> </goals>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <phase>test-compile</phase>
                         <configuration>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
@@ -163,8 +206,77 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+                <executions>
+                    <!-- Replacing default-compile as it is treated specially by maven -->
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <!-- Replacing default-testCompile as it is treated specially by maven -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>java-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>java-test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.version}</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.*</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${failsafe.version}</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <includes>
+                            <include>**/*IT.*</include>
+                        </includes>
+                        <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin.version}</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
