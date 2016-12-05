@@ -36,6 +36,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <surefire.version>2.19.1</surefire.version>
         <failsafe.version>2.19.1</failsafe.version>
+        <nosqlunit.version>0.10.0</nosqlunit.version>
     </properties>
 
     <dependencyManagement>
@@ -137,11 +138,11 @@
                 <artifactId>spring-security-test</artifactId>
                 <version>${spring-security.version}</version>
             </dependency>
-            <!--<dependency>-->
-            <!--<groupId>org.mockito</groupId>-->
-            <!--<artifactId>mockito-core</artifactId>-->
-            <!--<version>${mockito-core.version}</version>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest-core</artifactId>
@@ -151,6 +152,11 @@
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest-library</artifactId>
                 <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lordofthejars</groupId>
+                <artifactId>nosqlunit-mongodb</artifactId>
+                <version>${nosqlunit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -263,7 +269,6 @@
                         <includes>
                             <include>**/*IT.*</include>
                         </includes>
-                        <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
