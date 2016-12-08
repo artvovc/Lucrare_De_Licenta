@@ -4,4 +4,5 @@ import com.university.nn.kotlinbased.db.model.UserClass
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface IUserClassRepository : MongoRepository<UserClass, String> {
+    fun findByUsername(username: String): UserClass
 }
