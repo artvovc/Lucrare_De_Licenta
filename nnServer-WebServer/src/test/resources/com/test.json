@@ -8,7 +8,11 @@
       "firstname": "asd0",
       "lastname": "asd0",
       "username": "asd0",
-      "password": "asd0"
+      "password": "asd0",
+      "roles": [
+        "ADMIN",
+        "USER"
+      ]
     },
     {
       "_id": {

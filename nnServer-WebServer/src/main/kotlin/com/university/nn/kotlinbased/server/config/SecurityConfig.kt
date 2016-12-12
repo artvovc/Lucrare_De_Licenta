@@ -23,14 +23,13 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     override fun configure(http: HttpSecurity?) {
-        http?.authorizeRequests()?.anyRequest()?.authenticated()
-//                ?.authorizeRequests()
-//                ?.antMatchers("/hello")?.permitAll()
-//                ?.antMatchers("/bye")?.permitAll()
-//                ?.anyRequest()?.authenticated()
+        http
+//                ?.authorizeRequests()?.anyRequest()?.authenticated()
+                ?.authorizeRequests()
+                ?.antMatchers("/hello")?.authenticated()
+                ?.antMatchers("/bye")?.access("hasAuthority('ADMIN') and hasAuthority('USER')")
                 ?.and()
                 ?.httpBasic()
-
         http
                 ?.csrf()?.disable()
     }

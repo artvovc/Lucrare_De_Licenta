@@ -10,15 +10,13 @@ import org.springframework.stereotype.Component
 
 @Component
 open class XAuthAuthenticationProvider @Autowired constructor(private val userRepository: IUserClassRepository) : AuthenticationProvider {
-
-    override fun supports(authentication: Class<*>?): Boolean {
-        return authentication!! == UsernamePasswordAuthenticationToken::class.java
-    }
-
+    override fun supports(authentication: Class<*>?): Boolean = authentication!! == UsernamePasswordAuthenticationToken::class.java
     override fun authenticate(authentication: Authentication?): Authentication {
-        var user = userRepository.findByUsername(authentication!!.name)
-        val userDetails = XAuthUserDetails("asd", "asd", true, true, true, true, mutableListOf(SimpleGrantedAuthority("ADMIN"), SimpleGrantedAuthority("USER")))
+        val user = userRepository.findByUsername(authentication!!.name)
+        val userDetails = XAuthUserDetails(user.username!!,
+                user.password!!,
+                true, true, true, true,
+                user.roles!!.map { SimpleGrantedAuthority(it.name) }.toMutableList())
         return UsernamePasswordAuthenticationToken(userDetails, userDetails.password, userDetails.authorities)
     }
-
 }

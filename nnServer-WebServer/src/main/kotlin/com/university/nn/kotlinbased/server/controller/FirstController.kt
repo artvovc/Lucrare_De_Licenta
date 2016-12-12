@@ -1,5 +1,7 @@
 package com.university.nn.kotlinbased.server.controller
 
+import com.university.nn.kotlinbased.db.model.UserClass
+import com.university.nn.kotlinbased.db.model.enums.Role
 import com.university.nn.kotlinbased.db.repository.IUserClassRepository
 import com.university.nn.kotlinbased.server.security.XAuthUserDetails
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,9 +13,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import java.io.ByteArrayInputStream
+import java.nio.charset.Charset
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-
 
 @Controller
 class FirstController
@@ -29,18 +32,15 @@ constructor(private val iuscr: IUserClassRepository,
 
     @GetMapping(path = arrayOf("/bye"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
     fun seyBye(httpServletRequest: HttpServletRequest, httpServletResponse: HttpServletResponse): HttpEntity<Any?> {
-//        val user = UserClass()
-//        user.firstname = "asd"
-//        user.lastname = "asd"
-//        user.username = "asd"
-//        user.password = "asd"
-//
-//        iuscr.save(user)
-
-        val user1 = iuscr.findByUsername("asd0")
-
-//        gridFsOperations.store(ByteArrayInputStream("asd".toByteArray(Charset.defaultCharset())), "superb")
-
+        val user = UserClass()
+        user.firstname = "asd"
+        user.lastname = "asd"
+        user.username = "asd"
+        user.password = "asd"
+        user.roles = mutableListOf(Role.ADMIN, Role.USER)
+        iuscr.save(user)
+        val user1 = iuscr.findByUsername("asd")
+        gridFsOperations.store(ByteArrayInputStream("asd".toByteArray(Charset.defaultCharset())), "superb")
         return ResponseEntity(user1, OK)
     }
 
