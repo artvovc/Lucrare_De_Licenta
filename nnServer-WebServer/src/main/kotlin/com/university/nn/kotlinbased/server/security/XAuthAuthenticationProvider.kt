@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
 
 @Component
@@ -15,10 +16,8 @@ open class XAuthAuthenticationProvider @Autowired constructor(private val userRe
     }
 
     override fun authenticate(authentication: Authentication?): Authentication {
-
-
         var user = userRepository.findByUsername(authentication!!.name)
-        val userDetails = XAuthUserDetails()
+        val userDetails = XAuthUserDetails("asd", "asd", true, true, true, true, mutableListOf(SimpleGrantedAuthority("ADMIN"), SimpleGrantedAuthority("USER")))
         return UsernamePasswordAuthenticationToken(userDetails, userDetails.password, userDetails.authorities)
     }
 

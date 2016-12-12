@@ -1,6 +1,5 @@
 package com.university.nn.kotlinbased.server.controller
 
-import com.university.nn.kotlinbased.db.model.UserClass
 import com.university.nn.kotlinbased.db.repository.IUserClassRepository
 import com.university.nn.kotlinbased.server.security.XAuthUserDetails
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,15 +29,15 @@ constructor(private val iuscr: IUserClassRepository,
 
     @GetMapping(path = arrayOf("/bye"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
     fun seyBye(httpServletRequest: HttpServletRequest, httpServletResponse: HttpServletResponse): HttpEntity<Any?> {
-        val user = UserClass()
-        user.firstname = "asd"
-        user.lastname = "asd"
-        user.username = "asd"
-        user.password = "asd"
+//        val user = UserClass()
+//        user.firstname = "asd"
+//        user.lastname = "asd"
+//        user.username = "asd"
+//        user.password = "asd"
+//
+//        iuscr.save(user)
 
-        iuscr.save(user)
-
-        val user1 = iuscr.findByUsername("asd")
+        val user1 = iuscr.findByUsername("asd0")
 
 //        gridFsOperations.store(ByteArrayInputStream("asd".toByteArray(Charset.defaultCharset())), "superb")
 

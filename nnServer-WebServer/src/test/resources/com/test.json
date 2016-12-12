@@ -1,0 +1,34 @@
+{
+  "userClass": [
+    {
+      "_id": {
+        "$oid": "5849681a5e0ab884db0e06a0"
+      },
+      "_class": "com.university.nn.kotlinbased.db.model.UserClass",
+      "firstname": "asd0",
+      "lastname": "asd0",
+      "username": "asd0",
+      "password": "asd0"
+    },
+    {
+      "_id": {
+        "$oid": "5849681a5e0ab884db0e06a1"
+      },
+      "_class": "com.university.nn.kotlinbased.db.model.UserClass",
+      "firstname": "asd1",
+      "lastname": "asd1",
+      "username": "asd1",
+      "password": "asd1"
+    },
+    {
+      "_id": {
+        "$oid": "5849681a5e0ab884db0e06a2"
+      },
+      "_class": "com.university.nn.kotlinbased.db.model.UserClass",
+      "firstname": "asd2",
+      "lastname": "asd2",
+      "username": "asd2",
+      "password": "asd2"
+    }
+  ]
+}

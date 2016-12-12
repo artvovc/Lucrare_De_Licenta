@@ -7,21 +7,27 @@ import org.springframework.stereotype.Service
 
 @Service
 open class XAuthUserDetails : UserDetails {
-    override fun getUsername(): String = "asd"
 
-    override fun isCredentialsNonExpired(): Boolean = true
+    private val username: String = ""
+    private val password: String = ""
+    private val isCredentialsNonExpired: Boolean = true
+    private val isAccountNonExpired: Boolean = true
+    private val isAccountNonLocked: Boolean = true
+    private val isEnabled: Boolean = true
+    private val roles: MutableCollection<SimpleGrantedAuthority> = null!!
 
-    override fun isAccountNonExpired(): Boolean = true
+    override fun getUsername(): String = this.username
 
-    override fun isAccountNonLocked(): Boolean = true
+    override fun getPassword(): String = this.password
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf(SimpleGrantedAuthority("NOOB"), SimpleGrantedAuthority("MUDAK"))
-    }
+    override fun isCredentialsNonExpired(): Boolean = this.isCredentialsNonExpired
 
-    override fun isEnabled(): Boolean = true
+    override fun isAccountNonExpired(): Boolean = this.isAccountNonExpired
 
-    override fun getPassword(): String = "asd"
+    override fun isAccountNonLocked(): Boolean = this.isAccountNonLocked
 
+    override fun isEnabled(): Boolean = this.isEnabled
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = this.roles
 
 }
