@@ -21,9 +21,8 @@ open class MongodbConfig
 @Autowired
 constructor(private val environment: Environment) : AbstractMongoConfiguration() {
 
-    override fun getDatabaseName(): String {
-        return environment.getRequiredProperty("mongo.db");
-    }
+    override fun getDatabaseName(): String = environment.getRequiredProperty("mongo.db")
+
 
     override fun mongoDbFactory(): MongoDbFactory = SimpleMongoDbFactory(
             mongo(),
@@ -37,8 +36,6 @@ constructor(private val environment: Environment) : AbstractMongoConfiguration()
             Integer.parseInt(environment.getRequiredProperty("mongo.port")))
 
     @Bean
-    open fun gridFsTemplate(): GridFsTemplate {
-        return GridFsTemplate(mongoDbFactory(), mappingMongoConverter())
-    }
+    open fun gridFsTemplate(): GridFsTemplate = GridFsTemplate(mongoDbFactory(), mappingMongoConverter())
 
 }
