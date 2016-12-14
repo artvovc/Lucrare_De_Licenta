@@ -24,9 +24,6 @@ import javax.annotation.Resource;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-/**
- * Created by Artemie on 03.12.2016.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {IntegrationTestConfig.class})

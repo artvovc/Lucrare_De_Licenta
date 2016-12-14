@@ -18,28 +18,22 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     var xAuthAuthenticationProvider: XAuthAuthenticationProvider? = null
 
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth?.authenticationProvider(xAuthAuthenticationProvider)
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.authenticationProvider(xAuthAuthenticationProvider)
     }
 
-    override fun configure(http: HttpSecurity?) {
+    override fun configure(http: HttpSecurity) {
         http
-//                ?.authorizeRequests()?.anyRequest()?.authenticated()
-                ?.authorizeRequests()
-                ?.antMatchers("/hello")?.authenticated()
-                ?.antMatchers("/bye")?.access("hasAuthority('ADMIN') and hasAuthority('USER')")
-                ?.and()
-                ?.httpBasic()
+                .authorizeRequests().antMatchers("/bye").anonymous()
+//                .antMatchers("/hello").authenticated()
+//                .antMatchers("/bye").access("hasAuthority('ADMIN') and hasAuthority('USER')")
+                .and()
+                .httpBasic()
         http
-                ?.csrf()?.disable()
+                .csrf().disable()
     }
 
-    override fun authenticationManagerBean(): AuthenticationManager {
-        return super.authenticationManagerBean()
-    }
+    override fun authenticationManagerBean(): AuthenticationManager = super.authenticationManagerBean()
 
-//    override fun userDetailsServiceBean(): UserDetailsService {
-//        return XAuthUserDetailsService(userRopository!!)
-//    }
 
 }

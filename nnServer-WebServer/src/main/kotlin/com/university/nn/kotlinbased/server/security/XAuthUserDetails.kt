@@ -12,7 +12,7 @@ constructor(
         private val isAccountNonExpired: Boolean,
         private val isAccountNonLocked: Boolean,
         private val isEnabled: Boolean,
-        private val roles: MutableCollection<SimpleGrantedAuthority>?
+        private val roles: MutableCollection<SimpleGrantedAuthority>
 ) : UserDetails {
     override fun getUsername(): String = this.username
     override fun getPassword(): String = this.password
@@ -20,5 +20,5 @@ constructor(
     override fun isAccountNonExpired(): Boolean = this.isAccountNonExpired
     override fun isAccountNonLocked(): Boolean = this.isAccountNonLocked
     override fun isEnabled(): Boolean = this.isEnabled
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = this.roles!!
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = this.roles
 }

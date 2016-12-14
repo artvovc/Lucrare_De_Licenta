@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service
 @Service
 open class XAuthUserDetailsService @Autowired constructor(private val userRepository: IUserClassRepository) : UserDetailsService {
 
-    override fun loadUserByUsername(username: String?): UserDetails {
-        username!!
-        val user = userRepository.findByUsername(username)
-        return XAuthUserDetails(user.username!!,
-                user.password!!,
+    override fun loadUserByUsername(username: String): UserDetails {
+        val user = userRepository.findByUsername(username) ?: throw Exception("User not found")
+        return XAuthUserDetails(user.username,
+                user.password,
                 true, true, true, true,
-                user.roles!!.map { SimpleGrantedAuthority(it.name) }.toMutableList())
+                user.roles.map { SimpleGrantedAuthority(it.name) }.toMutableList())
     }
 
 }
