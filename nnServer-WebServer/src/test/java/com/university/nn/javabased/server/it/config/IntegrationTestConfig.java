@@ -4,6 +4,7 @@ import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import com.university.nn.kotlinbased.server.config.AppContextConfig;
 import com.university.nn.kotlinbased.server.config.DispatcherConfig;
 import com.university.nn.kotlinbased.server.config.SecurityConfig;
+import org.mongeez.MongeezRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,5 +25,10 @@ public class IntegrationTestConfig {
         return newMongoDbRule().defaultManagedMongoDb(
                 environment.getRequiredProperty("mongo.db"),
                 Integer.parseInt(environment.getRequiredProperty("mongo.port")));
+    }
+
+    @Bean
+    public MongeezRunner mongeez() {
+        return new MongeezRunner();
     }
 }
