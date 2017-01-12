@@ -6,4 +6,6 @@ import org.springframework.context.annotation.Import
 
 @Configuration
 @Import(MongodbConfig::class)
-open class AppContextConfig
+open class AppContextConfig {
+
+}

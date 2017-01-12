@@ -37,6 +37,7 @@
         <surefire.version>2.19.1</surefire.version>
         <failsafe.version>2.19.1</failsafe.version>
         <nosqlunit.version>0.10.0</nosqlunit.version>
+        <mongeez.version>0.9.6</mongeez.version>
     </properties>
 
     <dependencyManagement>
@@ -120,6 +121,11 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-mongodb</artifactId>
                 <version>${spring-mongodb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongeez</groupId>
+                <artifactId>mongeez</artifactId>
+                <version>${mongeez.version}</version>
             </dependency>
 
             <!--TEST DEPEND-->
