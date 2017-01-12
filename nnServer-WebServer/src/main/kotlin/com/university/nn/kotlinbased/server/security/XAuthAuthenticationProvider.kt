@@ -1,7 +1,7 @@
 package com.university.nn.kotlinbased.server.security
 
 import com.university.nn.kotlinbased.db.model.enums.Role.ANONYMOUS
-import com.university.nn.kotlinbased.db.repository.IUserClassRepository
+import com.university.nn.kotlinbased.db.repository.INNUserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.authentication.AuthenticationProvider
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-open class XAuthAuthenticationProvider @Autowired constructor(private val userRepository: IUserClassRepository) : AuthenticationProvider {
+open class XAuthAuthenticationProvider @Autowired constructor(private val userRepository: INNUserRepository) : AuthenticationProvider {
     override fun supports(authentication: Class<*>): Boolean = authentication == UsernamePasswordAuthenticationToken::class.java
     override fun authenticate(authentication: Authentication): Authentication {
         val user = userRepository.findByUsername(authentication.name) ?: return AnonymousAuthenticationToken(Date().time.toString() + " ANONYMOUS", Date().time.toString() + " ANONYMOUS", mutableListOf(SimpleGrantedAuthority(ANONYMOUS.name)))

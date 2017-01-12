@@ -1,0 +1,5 @@
+<changeFiles>
+    <file path="changelog/mongoJsLog.js"/>
+    <file path="changelog/mongoJsLog2.js"/>
+    <file path="changelog/mongoJsLog3.js"/>
+</changeFiles>

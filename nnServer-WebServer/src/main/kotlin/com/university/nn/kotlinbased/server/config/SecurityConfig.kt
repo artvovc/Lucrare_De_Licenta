@@ -24,9 +24,10 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
-                .authorizeRequests().antMatchers("/bye").anonymous()
-//                .antMatchers("/hello").authenticated()
-//                .antMatchers("/bye").access("hasAuthority('ADMIN') and hasAuthority('USER')")
+                .authorizeRequests()
+// .antMatchers("/bye").anonymous()
+                .antMatchers("/hello").authenticated()
+                .antMatchers("/bye").access("hasAuthority('ADMIN') and hasAuthority('USER')")
                 .and()
                 .httpBasic()
         http

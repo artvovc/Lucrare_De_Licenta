@@ -15,12 +15,5 @@
         <dir>..</dir>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.mongeez</groupId>
-            <artifactId>mongeez</artifactId>
-        </dependency>
-    </dependencies>
-
 
 </project>
