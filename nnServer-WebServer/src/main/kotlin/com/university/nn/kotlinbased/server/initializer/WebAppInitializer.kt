@@ -26,6 +26,6 @@ open class WebAppInitializer : WebApplicationInitializer {
 
         val dispatcher = servletContext.addServlet("dispatcher", DispatcherServlet(dispatcherContext))
         dispatcher.setLoadOnStartup(1)
-        dispatcher.addMapping("/*")
+        dispatcher.addMapping("/")
     }
 }

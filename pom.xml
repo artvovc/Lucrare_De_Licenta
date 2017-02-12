@@ -38,6 +38,7 @@
         <failsafe.version>2.19.1</failsafe.version>
         <nosqlunit.version>0.10.0</nosqlunit.version>
         <mongeez.version>0.9.6</mongeez.version>
+        <jstl.version>1.2</jstl.version>
     </properties>
 
     <dependencyManagement>
@@ -126,6 +127,11 @@
                 <groupId>org.mongeez</groupId>
                 <artifactId>mongeez</artifactId>
                 <version>${mongeez.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>${jstl.version}</version>
             </dependency>
 
             <!--TEST DEPEND-->

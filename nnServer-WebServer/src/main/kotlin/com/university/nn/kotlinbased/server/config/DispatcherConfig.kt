@@ -9,19 +9,25 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer
+
+
 
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = arrayOf("com.university.nn.kotlinbased.server.controller"))
-@Import(AppContextConfig::class, Swagger2Config::class)
+@Import(Swagger2Config::class)
 open class DispatcherConfig : WebMvcConfigurerAdapter() {
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry?) {
-        registry!!.addResourceHandler("swagger-ui.html")
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/")
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/")
+
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("/css/")
     }
 
     @Bean(name = arrayOf("viewResolver"))
@@ -31,6 +37,13 @@ open class DispatcherConfig : WebMvcConfigurerAdapter() {
         viewResolver.setSuffix(".jsp")
         return viewResolver
     }
+
+
+    override fun configureDefaultServletHandling(configurer: DefaultServletHandlerConfigurer) {
+        configurer.enable()
+    }
+
+
 
 //    override fun addCorsMappings(registry: CorsRegistry?) {
 //        registry

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -48,6 +49,16 @@ constructor(private val iuscr: INNUserRepository,
     fun postUser(@RequestBody nnUser: NNUser): HttpEntity<Any> {
         iuscr.insert(nnUser)
         return ResponseEntity("ok", OK)
+    }
+
+    @GetMapping(path = arrayOf("/post"))
+    fun getForm(): Any {
+        return "Test"
+    }
+
+    @GetMapping(path = arrayOf("/po"))
+    fun getFo(): ModelAndView {
+        return ModelAndView("Test")
     }
 
 }
