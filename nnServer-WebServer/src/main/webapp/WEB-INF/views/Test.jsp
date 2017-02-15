@@ -14,9 +14,7 @@
 <h1>hello css h1</h1>
 <h2>hello css h2</h2>
 Hello
-<h2>Checkout this font color. Loaded from 'crunchify.css' file under '/WebContent/resources/' folder</h2>
 
-<div id="crunchifyMessage"></div>
 
 </body>
 </html>

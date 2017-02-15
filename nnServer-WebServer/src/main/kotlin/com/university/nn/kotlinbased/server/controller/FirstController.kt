@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.xml.ws.Response
 
 @Controller
 class FirstController
@@ -55,6 +57,17 @@ constructor(private val iuscr: INNUserRepository,
     fun getForm(): Any {
         return "Test"
     }
+
+    @GetMapping(path = arrayOf("/get"))
+    fun getText(): ModelAndView {
+        return ModelAndView("Post","command", NNUser())
+    }
+    @PostMapping(path = arrayOf("/pet"))
+    fun add(@ModelAttribute("none") nnUser: NNUser): HttpEntity<String>{
+        println(nnUser)
+        return ResponseEntity("Yes",OK)
+    }
+
 
     @GetMapping(path = arrayOf("/po"))
     fun getFo(): ModelAndView {
