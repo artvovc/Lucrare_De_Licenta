@@ -93,6 +93,11 @@
             <artifactId>nnServer-DataBase</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>kr.pe.kwonnam.jsp</groupId>
+            <artifactId>jsp-template-inheritance</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
         <!--TEST DEPEND-->
         <dependency>
