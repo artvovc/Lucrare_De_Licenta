@@ -10,6 +10,7 @@
       <c:url value="/resources/css/test.css"/> "/>
 </head>
 <body>
+
 <layout:block name="body">
     <form:form method="POST" action="/nn/pet">
         <table>
@@ -29,5 +30,6 @@
         </table>
     </form:form>
 </layout:block>
+
 </body>
 </html>

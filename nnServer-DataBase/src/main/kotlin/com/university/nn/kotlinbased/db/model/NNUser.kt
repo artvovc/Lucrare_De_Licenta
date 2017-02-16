@@ -15,7 +15,8 @@ data class NNUser(@Id
 ) {
     constructor(username: String, password: String, roles: MutableCollection<Role>) :
             this(id = null, firstname = null, lastname = null, username = username, password = password, roles = roles)
-
+    constructor(username: String, password: String) :
+            this(id = null, firstname = null, lastname = null, username = username, password = password, roles = mutableListOf())
     constructor() :
             this(id = null, firstname = null, lastname = null, username = "", password = "", roles = mutableListOf())
 
