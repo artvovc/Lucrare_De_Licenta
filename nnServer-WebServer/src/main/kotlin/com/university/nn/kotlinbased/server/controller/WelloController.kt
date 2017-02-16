@@ -48,6 +48,7 @@ constructor(private val iuscr: INNUserRepository,
 //    }
 
 
+    //TODO     http://stackoverflow.com/questions/22682566/spring-display-image-in-jsp-from-mongodb
     @GetMapping(path = arrayOf("/"))
     fun getText(): ModelAndView {
         return ModelAndView("index","command", NNUser(username = "MyName", password = "asdasd"))
