@@ -28,6 +28,11 @@
             <groupId>org.mongeez</groupId>
             <artifactId>mongeez</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>${rometools.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

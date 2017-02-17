@@ -1,9 +1,9 @@
 package com.university.nn.kotlinbased.server.config
 
-import com.university.nn.kotlinbased.db.config.MongodbConfig
+import com.university.nn.kotlinbased.config.CoreConfig
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
 @Configuration
-@Import(MongodbConfig::class)
+@Import(CoreConfig::class)
 open class AppContextConfig

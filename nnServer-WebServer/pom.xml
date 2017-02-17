@@ -87,10 +87,9 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
-        <!--TODO DELETE-->
         <dependency>
             <groupId>nnServer</groupId>
-            <artifactId>nnServer-DataBase</artifactId>
+            <artifactId>nnServer-Core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
