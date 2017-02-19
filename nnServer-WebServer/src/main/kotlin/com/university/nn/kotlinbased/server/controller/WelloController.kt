@@ -57,15 +57,21 @@ constructor(private val iuscr: INNUserRepository,
     fun getFeed(
             @RequestBody requestFeed: RequestFeed
     ): HttpEntity<ListDto<ResponseFeed>> {
-
         println("asdasdasdasd")
-
         val list = ListDto<ResponseFeed>()
         feedService.getFeed(requestFeed.url!!).entries.forEach {
             entry -> list.setElement(ResponseFeed(entry.title,entry.author,entry.link,entry.description.value))
         }
+        return ResponseEntity(list, OK)
+    }
 
-
+    @PostMapping(path = arrayOf("/search"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+    fun searchFeed(
+            @RequestBody requestFeed: RequestFeed
+    ): HttpEntity<ListDto<ResponseFeed>> {
+        println("search")
+        val list = ListDto<ResponseFeed>()
+        feedService.searchFeed(requestFeed.url!!)
         return ResponseEntity(list, OK)
     }
 
