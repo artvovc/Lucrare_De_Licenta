@@ -5,5 +5,5 @@ import com.university.nn.kotlinbased.utils.Container
 
 interface FeedDao {
     fun getFeeds(urls: List<String>): List<SyndFeed>
-    fun searchFeed(key: String): List<Container>
+    fun searchFeeds(key: String): List<Container>
 }

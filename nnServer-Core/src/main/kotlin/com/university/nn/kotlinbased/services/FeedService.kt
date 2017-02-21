@@ -12,5 +12,5 @@ class FeedService
 constructor(private val feedDao: FeedDao){
     fun getFeeds(urls:List<String>): List<SyndFeed> = feedDao.getFeeds(urls)
 
-    fun searchFeed(key: String): List<Container> = feedDao.searchFeed(key)
+    fun searchFeeds(key: String): List<Container> = feedDao.searchFeeds(key)
 }

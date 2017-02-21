@@ -31,9 +31,9 @@ constructor(
     }
 
     @PostMapping(path = arrayOf("/search"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
-    fun searchFeed(@RequestBody requestSearch: RequestSearch): HttpEntity<Any> {
+    fun searchFeeds(@RequestBody requestSearch: RequestSearch): HttpEntity<Any> {
         if (requestSearch.key.isEmpty()) return ResponseEntity(BAD_REQUEST)
-        val response = feedService.searchFeed(requestSearch.key)
+        val response = feedService.searchFeeds(requestSearch.key)
         if (response.isEmpty())
             throw Exception()
         return ResponseEntity(response, OK)
