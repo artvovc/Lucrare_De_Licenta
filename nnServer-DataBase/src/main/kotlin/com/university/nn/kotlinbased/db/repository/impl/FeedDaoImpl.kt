@@ -26,7 +26,7 @@ open class FeedDaoImpl : FeedDao {
     override fun searchFeeds(key: String): List<Container> {
         val list = ArrayList<Container>()
         logger.warn(key)
-        val baseUrl = "http://www.google.com/search?num=20&q=$key"
+        val baseUrl = "http://www.google.com/search?num=5&q=$key"
         logger.warn(baseUrl)
         val document = Jsoup.connect(baseUrl).userAgent(useragent).timeout(10000).get()
         val cite = document.getElementsByTag("cite")

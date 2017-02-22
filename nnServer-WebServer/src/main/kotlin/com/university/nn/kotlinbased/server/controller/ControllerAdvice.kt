@@ -16,28 +16,6 @@ open class ControllerAdvice {
 
     @ExceptionHandler(Exception::class)
     fun exception(e: Exception): HttpEntity<Any> {
-        println(getStackTrace(e))
-        return ResponseEntity("""{"error":"feed was not found", "e.message": "${e.message}", "e.trace":"${getStackTrace(e)}" }""", OK)
-    }
-
-    fun getStackTrace(throwable: Exception): String {
-
-
-        val elements = throwable.stackTrace
-        var i = 0
-        val n = elements.size
-
-        var err = ""
-
-        while (i < n) {
-            err += (elements[i].fileName
-                    + ":" + elements[i].lineNumber
-                    + ">> "
-                    + elements[i].methodName + "()")
-            i++
-        }
-
-
-        return err
+        return ResponseEntity("""{"error":"feed was not found"}""", OK)
     }
 }
