@@ -1,21 +1,24 @@
 package com.university.nn.kotlinbased.server.controller
 
 fun main(args : Array<String>) {
-    val list = listOf(1,2,3,4,5,6,7,8,9,0)
+    val list = listOf(1,2,3,4,5,6,7,8,9)
 
-    val page = 1
+    val page = 4123
+    val pageSize = 3
 
-    val pagesize = 5
+    var totalPages = list.size/pageSize
+    totalPages = if(list.size.mod(pageSize)!=0) totalPages+1 else totalPages
 
-    val totalPages = list.size/pagesize
+    val pageElementsToDrop = page*pageSize
+    var pageElementsToDropLast = list.size-pageSize-pageElementsToDrop
+    pageElementsToDropLast = if (pageElementsToDropLast>0) pageElementsToDropLast else 0
 
-    val mod = list.size.mod(totalPages)
+    list
+            .drop(pageElementsToDrop)
+            .dropLast(pageElementsToDropLast)
+            .forEach (::println)
 
-    val pageElements = page*pagesize
-
-    list.drop(pageElements).dropLast(list.size-pagesize).forEach (::println)
-
-    println("page=${page}  pageSize=${pagesize}  totalPages=${totalPages}")
+    println("page=${page}  pageSize=${pageSize}  totalPages=${totalPages}")
 
 
     println("${list.size.mod(totalPages)}")
