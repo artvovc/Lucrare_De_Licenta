@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody
 @Controller
 class FeedController
 @Autowired
-constructor(
-        private val feedService: FeedService) {
+constructor(private val feedService: FeedService) {
 
     internal var logger = Logger.getLogger(FeedController::class.java)
+
     @PostMapping(path = arrayOf("/"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
     fun getFeeds(@RequestBody requestFeeds: RequestFeeds): HttpEntity<Any> {
         if (requestFeeds.urls.size == 0)
@@ -34,9 +34,20 @@ constructor(
                 ResponseFeed(entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
             }
         }
-        val size = list.size
+        var totalPages = list.size/requestFeeds.pageSize
+        totalPages = if(list.size.mod(requestFeeds.pageSize)!=0) totalPages+1 else totalPages
+        listDto.totalPages = totalPages
 
-//        listDto.list = list.drop(requestFeeds.page*requestFeeds.pageSize).dropLast()
+        val pageElementsToDrop = requestFeeds.page*requestFeeds.pageSize
+        var pageElementsToDropLast = list.size-requestFeeds.pageSize-pageElementsToDrop
+        pageElementsToDropLast = if (pageElementsToDropLast>0) pageElementsToDropLast else 0
+
+        listDto.list = list
+                .drop(pageElementsToDrop)
+                .dropLast(pageElementsToDropLast)
+
+        listDto.page = requestFeeds.page
+        listDto.pageSize = requestFeeds.pageSize
 
         return ResponseEntity(listDto, OK)
     }
