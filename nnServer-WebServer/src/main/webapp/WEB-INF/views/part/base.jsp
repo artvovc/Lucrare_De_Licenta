@@ -12,15 +12,11 @@
 <body>
 
 <layout:block name="body">
-    <form:form method="POST" action="/nn/pet">
+    <form:form method="POST" action="/search" modelAttribute="requestSearch">
         <table>
             <tr>
-                <td><form:label id="mycolor" path="username">username</form:label></td>
-                <td><form:input path="username" /></td>
-            </tr>
-            <tr>
-                <td><form:label path="password">password</form:label></td>
-                <td><form:input path="password" /></td>
+                <td><form:label path="key">Search</form:label></td>
+                <td><form:input path="key" /></td>
             </tr>
             <tr>
                 <td colspan="2">
