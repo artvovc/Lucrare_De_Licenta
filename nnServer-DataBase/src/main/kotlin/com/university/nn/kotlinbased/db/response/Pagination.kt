@@ -1,8 +1,10 @@
 package com.university.nn.kotlinbased.db.response
 
 import com.university.nn.kotlinbased.db.request.RequestFeeds
+import redis.clients.jedis.Jedis
 
 object Pagination {
+
     fun paginate(requestFeeds: RequestFeeds, list: List<ResponseFeed>): ListDto<ResponseFeed> {
         val listDto = ListDto<ResponseFeed>()
         var totalPages = list.size / requestFeeds.pageSize

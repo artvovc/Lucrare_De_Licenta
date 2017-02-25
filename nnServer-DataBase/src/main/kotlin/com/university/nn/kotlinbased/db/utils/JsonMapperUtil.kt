@@ -26,13 +26,18 @@ inline fun <reified T : Any> String?.toClass(): T? {
 
 
 fun main(args: Array<String>) {
-    val jedis = Jedis("localhost")
-    val key = "key"
-    val ct = Container()
-    ct.iconUrl = "asdasd"
-    val containerList: ListContainerWraper = ListContainerWraper(mutableListOf(Container(), ct))
-    jedis.set(key, containerList.toJson())
-    val rcontainerList: ListContainerWraper? = jedis.get(key).toClass()
-    print(rcontainerList)
+
+    var list:List<String> = mutableListOf("aaaa")
+
+    print(list.toString())
+
+//    val jedis = Jedis("localhost")
+//    val key = "key"
+//    val ct = Container()
+//    ct.iconUrl = "asdasd"
+//    val containerList: ListContainerWraper = ListContainerWraper(mutableListOf(Container(), ct))
+//    jedis.set(key, containerList.toJson())
+//    val rcontainerList: ListContainerWraper? = jedis.get(key).toClass()
+//    print(rcontainerList)
 }
 

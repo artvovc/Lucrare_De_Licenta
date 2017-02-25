@@ -22,16 +22,33 @@ open class FeedDaoImpl : FeedDao {
 
     companion object {
         val USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0"
+        val TIME_TO_KEEP = 1000*60*20
     }
 
-    override fun getFeeds(urls: List<String>): List<ResponseFeed> =
-            urls.map { url -> SyndFeedInput().build(XmlReader(URL(url))) }
-                    .flatMap { syndFeed ->
-                        syndFeed.entries
-                                .map { entry ->
-                                    ResponseFeed(entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
-                                }
+    override fun getFeeds(urls: List<String>): List<ResponseFeed> {
+        val jedis = Jedis("localhost")
+        val key = urls.toString()
+        val wraper: ListFeedsWraper? = jedis.get(key).toClass()
+        if (wraper?.list?.isNotEmpty() != null) {
+            return wraper?.list ?: mutableListOf()
+        }
+        val dates = urls.map { url -> SyndFeedInput().build(XmlReader(URL(url))) }
+                .flatMap { syndFeed ->
+                    syndFeed.entries.map { entry ->
+                        ResponseFeed(
+                                entry.title,
+                                entry.author,
+                                entry.link,
+                                entry.description.value,
+                                entry.publishedDate
+                        )
                     }
+                }
+        if (dates.isNotEmpty()) {
+            jedis.setex(key,TIME_TO_KEEP, ListFeedsWraper(dates).toJson())
+        }
+        return dates
+    }
 
     override fun searchFeeds(key: String): List<Container> {
         val jedis = Jedis("localhost")
@@ -94,3 +111,4 @@ open class FeedDaoImpl : FeedDao {
 }
 
 class ListContainerWraper(val list: List<Container>)
+class ListFeedsWraper(val list: List<ResponseFeed>)
