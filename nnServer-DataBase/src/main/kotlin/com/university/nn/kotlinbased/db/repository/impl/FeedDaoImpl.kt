@@ -1,9 +1,9 @@
 package com.university.nn.kotlinbased.db.repository.impl
 
-import com.rometools.rome.feed.synd.SyndFeed
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import com.university.nn.kotlinbased.db.repository.FeedDao
+import com.university.nn.kotlinbased.db.response.ResponseFeed
 import com.university.nn.kotlinbased.utils.Container
 import org.apache.log4j.Logger
 import org.jsoup.Jsoup
@@ -21,23 +21,26 @@ open class FeedDaoImpl : FeedDao {
         val USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0"
     }
 
-    override fun getFeeds(urls: List<String>): List<SyndFeed> = urls.map { url -> SyndFeedInput().build(XmlReader(URL(url))) }
+    override fun getFeeds(urls: List<String>): List<ResponseFeed> =
+            urls.map { url -> SyndFeedInput().build(XmlReader(URL(url))) }
+                    .flatMap { syndFeed ->
+                        syndFeed.entries
+                                .map { entry ->
+                                    ResponseFeed(entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
+                                }
+                    }
 
     override fun searchFeeds(key: String): List<Container> {
         val list = ArrayList<Container>()
-        logger.warn(key)
         val baseUrl = "http://www.google.com/search?num=5&q=$key"
-        logger.warn(baseUrl)
         val document = Jsoup.connect(baseUrl).userAgent(USER_AGENT).timeout(10000).get()
         val cite = document.getElementsByTag("cite")
                 .map { cite -> cite.html().replace("<b>|</b>".toRegex(), "") }
                 .filter { cite -> cite.matches(("""^(www|https://www|https://|https://blog)?[.]?$key.*[.](com|ru|en|md|ua).*""").toRegex()) && !cite.contains(("?")) }
-        logger.warn("cite " + cite.size)
         cite.forEach { cite ->
             var url = cite
             if (!cite.contains("http"))
                 url = "http://$url"
-            logger.warn("URL : " + url)
             val container: Container = Container()
             val doc = Jsoup.connect(url).userAgent(USER_AGENT).timeout(10000).get()
             val icon = doc.head().select("link[href~=.*\\.(ico|png)]").first()
@@ -46,11 +49,9 @@ open class FeedDaoImpl : FeedDao {
                 container.iconUrl = if (iconlink.contains("http")) iconlink else url + iconlink
             }
             if (doc.html().contains("application/rss+xml")) {
-                logger.warn("IF STATEMENT")
                 val link = doc.head().select("link[type=application/rss+xml]").attr("href")
                 container.feeds.add(if (link.contains("http".toRegex())) link else url + link)
             } else {
-                logger.warn("deepExtractFeed")
                 deepExtractFeed(container, doc)
             }
             list.add(container)
