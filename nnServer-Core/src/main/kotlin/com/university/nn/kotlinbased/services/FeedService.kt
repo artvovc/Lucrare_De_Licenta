@@ -1,6 +1,5 @@
 package com.university.nn.kotlinbased.services
 
-import com.rometools.rome.feed.synd.SyndFeed
 import com.university.nn.kotlinbased.db.repository.FeedDao
 import com.university.nn.kotlinbased.db.response.ResponseFeed
 import com.university.nn.kotlinbased.utils.Container

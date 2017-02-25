@@ -4,11 +4,14 @@ import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import com.university.nn.kotlinbased.db.repository.FeedDao
 import com.university.nn.kotlinbased.db.response.ResponseFeed
+import com.university.nn.kotlinbased.db.utils.toClass
+import com.university.nn.kotlinbased.db.utils.toJson
 import com.university.nn.kotlinbased.utils.Container
 import org.apache.log4j.Logger
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.stereotype.Repository
+import redis.clients.jedis.Jedis
 import java.net.URL
 import java.util.*
 
@@ -31,13 +34,11 @@ open class FeedDaoImpl : FeedDao {
                     }
 
     override fun searchFeeds(key: String): List<Container> {
-
         val jedis = Jedis("localhost")
-//        val containerList:List<Container> = jedis.get(key).toClass()
-//        if (containerList.isEmpty()){
-//            return containerList
-//        }
-
+        val wraper: ListContainerWraper? = jedis.get(key).toClass()
+        if (wraper?.list?.isNotEmpty() != null) {
+            return wraper?.list ?: mutableListOf()
+        }
 
         val list = ArrayList<Container>()
         val baseUrl = "http://www.google.com/search?num=5&q=$key"
@@ -64,7 +65,15 @@ open class FeedDaoImpl : FeedDao {
             }
             list.add(container)
         }
-        return list.filter { elem -> elem.feeds.size != 0 }
+
+        logger.warn("before finish")
+
+        val dates = list.filter { elem -> elem.feeds.size != 0 }
+        logger.warn("dates $dates")
+        if (dates.isNotEmpty()) {
+            jedis.set(key, ListContainerWraper(dates).toJson())
+        }
+        return dates
     }
 
     private fun deepExtractFeed(container: Container, doc: Document) {
@@ -83,3 +92,5 @@ open class FeedDaoImpl : FeedDao {
         }
     }
 }
+
+class ListContainerWraper(val list: List<Container>)

@@ -26,41 +26,12 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer
 
 
 @Configuration
-@PropertySource(value = *arrayOf("classpath:mongodb.properties","classpath:/redis.properties"))
+@PropertySource(value = *arrayOf("classpath:mongodb.properties"))
 @EnableMongoRepositories(value = "com.university.nn.kotlinbased.db.repository")
 @ComponentScan(value = "com.university.nn.kotlinbased.db.repository.impl")
 open class MongodbConfig
 @Autowired
 constructor(private val environment: Environment) : AbstractMongoConfiguration() {
-
-    @Value("\${redis.host}") private val redisHost: String? = null
-    @Value("\${redis.port}") private val redisPort: Int = 0
-
-    @Bean
-    fun propertySourcesPlaceholderConfigurer(): PropertySourcesPlaceholderConfigurer {
-        return PropertySourcesPlaceholderConfigurer()
-    }
-
-    @Bean
-    fun jedisConnectionFactory(): JedisConnectionFactory {
-        val factory = JedisConnectionFactory()
-        factory.hostName = redisHost
-        factory.port = redisPort
-        factory.usePool = true
-        return factory
-    }
-
-    @Bean
-    fun redisTemplate(): RedisTemplate<String, Any> {
-        val template = RedisTemplate<String, Any>()
-        template.connectionFactory = jedisConnectionFactory()
-        template.keySerializer = StringRedisSerializer()
-        template.hashValueSerializer = GenericToStringSerializer(Any::class.java)
-        template.valueSerializer = GenericToStringSerializer(Any::class.java)
-        return template
-    }
-
-    ////===============
 
     override fun getDatabaseName(): String = environment.getRequiredProperty("mongo.db")
 
