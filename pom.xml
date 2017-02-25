@@ -202,6 +202,11 @@
                 <artifactId>nosqlunit-mongodb</artifactId>
                 <version>${nosqlunit.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>1.8.0.RELEASE</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
