@@ -14,13 +14,15 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-class FeedController
+@RequestMapping(path = arrayOf("/mo"))
+class MobileController
 @Autowired
 constructor(private val feedService: FeedService) {
 
-    internal var logger = Logger.getLogger(FeedController::class.java)
+    internal var logger = Logger.getLogger(MobileController::class.java)
 
     @PostMapping(
             path = arrayOf("/"),
