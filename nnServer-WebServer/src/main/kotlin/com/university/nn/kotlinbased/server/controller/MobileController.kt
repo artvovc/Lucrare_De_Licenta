@@ -37,11 +37,4 @@ constructor(private val feedService: FeedService, val innUserRepository: INNUser
         val response = feedService.searchFeeds(requestSearch.key)
         if (response.isEmpty()) throw Exception() else return ResponseEntity(response, OK)
     }
-
-    @GetMapping("/get", produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
-    fun getF() : HttpEntity<Any>{
-        println(innUserRepository.findByUsername("asd1"))
-        return ResponseEntity(innUserRepository.findByUsername("asd1"),OK)
-    }
-
 }
