@@ -16,7 +16,6 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory
 import org.springframework.data.mongodb.gridfs.GridFsTemplate
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
-
 @Configuration
 @PropertySource(value = *arrayOf("classpath:mongodb.properties"))
 @EnableMongoRepositories(value = "com.university.nn.kotlinbased.db.repository")
@@ -25,18 +24,22 @@ open class MongodbConfig
 @Autowired
 constructor(private val environment: Environment) : AbstractMongoConfiguration() {
 
+    /**
+     * MongoDB configs
+     */
     override fun getDatabaseName(): String = environment.getRequiredProperty("mongo.db")
 
     override fun mongoDbFactory(): MongoDbFactory = SimpleMongoDbFactory(mongo(), environment.getRequiredProperty("mongo.db"))
-
     @Bean(name = arrayOf("mongoTemplate"))
     override fun mongoTemplate(): MongoTemplate = MongoTemplate(mongoDbFactory())
 
     override fun mongo(): MongoClient = MongoClient(environment.getRequiredProperty("mongo.host"), Integer.parseInt(environment.getRequiredProperty("mongo.port")))
-
     @Bean
     open fun gridFsTemplate(): GridFsTemplate = GridFsTemplate(mongoDbFactory(), mappingMongoConverter())
 
+    /**
+     * Mongeez configs
+     */
     @Bean
     open fun mongeez(): MongeezRunner {
         val mongeez = MongeezRunner()

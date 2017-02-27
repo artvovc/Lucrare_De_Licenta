@@ -1,10 +1,11 @@
 package com.university.nn.kotlinbased.db.response
 
+import com.university.nn.kotlinbased.db.model.Feed
 import com.university.nn.kotlinbased.db.request.RequestFeeds
 
 object Pagination {
-    fun paginate(requestFeeds: RequestFeeds, list: List<ResponseFeed>): ListDto<ResponseFeed> {
-        val listDto = ListDto<ResponseFeed>()
+    fun paginate(requestFeeds: RequestFeeds, list: List<Feed>): ListDto<Feed> {
+        val listDto = ListDto<Feed>()
         var totalPages = list.size / requestFeeds.pageSize
         totalPages = if (list.size.mod(requestFeeds.pageSize) != 0) totalPages + 1 else totalPages
         listDto.totalPages = totalPages

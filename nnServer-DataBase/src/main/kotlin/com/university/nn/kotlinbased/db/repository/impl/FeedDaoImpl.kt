@@ -2,33 +2,39 @@ package com.university.nn.kotlinbased.db.repository.impl
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
+import com.university.nn.kotlinbased.db.model.Feed
 import com.university.nn.kotlinbased.db.repository.FeedDao
-import com.university.nn.kotlinbased.db.response.ResponseFeed
+import com.university.nn.kotlinbased.db.repository.FeedRepository
 import com.university.nn.kotlinbased.utils.Container
-import org.apache.log4j.Logger
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import java.net.URL
 import java.util.*
 
 @Repository
-open class FeedDaoImpl : FeedDao {
-
-    internal var logger = Logger.getLogger(FeedDaoImpl::class.java)
+open class FeedDaoImpl
+@Autowired
+constructor(val feedRepository: FeedRepository) : FeedDao {
 
     companion object {
         val USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0"
     }
 
-    override fun getFeeds(urls: List<String>): List<ResponseFeed> =
-            urls.map { url -> SyndFeedInput().build(XmlReader(URL(url))) }
-                    .flatMap { syndFeed ->
-                        syndFeed.entries
-                                .map { entry ->
-                                    ResponseFeed(entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
-                                }
-                    }
+    override fun getFeeds(flinks: List<String>): List<Feed> {
+        val dbLinks = feedRepository.findByFeedLinkIn(flinks)
+        if(dbLinks.isNotEmpty()) return dbLinks else {
+            val list = flinks.flatMap { url ->
+                SyndFeedInput().build(XmlReader(URL(url))).entries
+                        .map { entry ->
+                            Feed(url, entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
+                        }
+            }
+            feedRepository.save(list)
+            return list
+        }
+    }
 
     override fun searchFeeds(key: String): List<Container> {
         val list = ArrayList<Container>()
