@@ -13,6 +13,6 @@ data class Feed(
         var description: String?,
         var createdDate: Date?
 ){
-        @Indexed(expireAfterSeconds = 10)
+        @Indexed(expireAfterSeconds = 300)
         var expireTime: Date = Date()
 }
