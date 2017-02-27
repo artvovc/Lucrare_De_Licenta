@@ -23,6 +23,21 @@ open class FeedDaoImpl : FeedDao {
         val TIME_TO_KEEP = 60 * 10
         val LOCALHOST = "localhost"
         val TIMEOUT = 10000
+        val PAGES_TO_SEARCH = 5
+        val RSS_TYPES = mutableListOf(
+                "application/rss+xml",
+                "application/atom+xml",
+                "application/rdf+xml",
+                "application/rss",
+                "application/atom",
+                "application/rdf",
+                "text/rss+xml",
+                "text/atom+xml",
+                "text/rdf+xml",
+                "text/rss",
+                "text/atom",
+                "text/rdf"
+        )
     }
 
     override fun getFeeds(urls: List<String>): List<ResponseFeed> {
@@ -68,7 +83,7 @@ open class FeedDaoImpl : FeedDao {
         log("wrapper is null")
         val list = ArrayList<Container>()
         log("list = $list")
-        val baseUrl = "http://www.google.com/search?num=5&q=$key"
+        val baseUrl = "http://www.google.com/search?num=$PAGES_TO_SEARCH&q=$key".replace(" ","%20")
         log("base url = $baseUrl")
         val document = Jsoup.connect(baseUrl).userAgent(USER_AGENT).timeout(TIMEOUT).get()
         log("document = $document")
@@ -94,16 +109,19 @@ open class FeedDaoImpl : FeedDao {
                 val iconlink = icon.attr("href")
                 container.iconUrl = if (iconlink.contains("http")) iconlink else url + iconlink
             }
-            if (doc.html().contains("application/rss+xml")) {
-                log("in cite for each, doc.html contains aplication rss+xl")
-                val link = doc.head().select("link[type=application/rss+xml]").attr("href")
-                log("in cite for each, link = $link")
-                container.feeds.add(if (link.contains("http".toRegex())) link else url + link)
-                log("in cite for each, container = $container")
-            } else {
-                log("in cite for each, code dont contain rss + xml")
-                deepExtractFeed(container, doc)
+
+            for (rssType in RSS_TYPES) {
+                if (doc.html().contains(rssType)) {
+                    log("in cite for each, doc.html contains aplication rss+xl")
+                    val link = doc.head().select("link[type=$rssType]").attr("href")
+                    log("in cite for each, link = $link")
+                    container.feeds.add(if (link.contains("http".toRegex())) link else url + link)
+                    log("in cite for each, container = $container")
+                    break
+                }
             }
+            log("in cite for each, code dont contain rss + xml")
+            deepExtractFeed(container, doc)
             log("in cite for each, list add conainer = $container")
             list.add(container)
         }
@@ -122,7 +140,12 @@ open class FeedDaoImpl : FeedDao {
         log("start deep extract")
         val hrefs = doc.select("a[href]")
                 .map { href -> href.attr("href") }
-                .filter { href -> href.contains("feed".toRegex()) && !href.contains("feedback") && href.contains("http".toRegex()) && !href.contains("(yahoo|facebook|twitter)".toRegex()) }
+                .filter { href ->
+                    (href.contains("feed".toRegex()) || href.contains("rss".toRegex()))
+                            && !href.contains("feedback")
+                            && href.contains("http".toRegex())
+                            && !href.contains("(yahoo|facebook|twitter)".toRegex())
+                }
         log("hrefps = $hrefs")
         log("")
         hrefs.forEach {
@@ -130,13 +153,14 @@ open class FeedDaoImpl : FeedDao {
             log("href foreach, ")
             val docFeed = Jsoup.connect(href).userAgent(USER_AGENT).timeout(TIMEOUT).get()
             log("href foreach, docFeed = $docFeed")
-            if (docFeed.html().contains("application/rss+xml")) {
-                log("href foreach, contains aplication rss + xml")
-                container.feeds.add(href)
-            } else {
-                log("href foreach, dont contains search deep")
-                deepExtractFeed(container, docFeed)
+            for (rssType in RSS_TYPES) {
+                if (docFeed.html().contains(rssType)) {
+                    log("href foreach, contains aplication rss + xml")
+                    container.feeds.add(href)
+                }
             }
+            log("href foreach, dont contains search deep")
+            deepExtractFeed(container, docFeed)
         }
     }
 }
@@ -146,4 +170,5 @@ open class FeedDaoImpl : FeedDao {
  * hard to serialize and desierialize lists to json
  */
 class ListContainerWraper(val list: List<Container>)
+
 class ListFeedsWraper(val list: List<ResponseFeed>)
