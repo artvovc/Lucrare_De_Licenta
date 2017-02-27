@@ -23,17 +23,17 @@ constructor(val feedRepository: FeedRepository) : FeedDao {
     }
 
     override fun getFeeds(flinks: List<String>): List<Feed> {
-        val dbLinks = feedRepository.findByFeedLinkIn(flinks)
-        if(dbLinks.isNotEmpty()) return dbLinks else {
-            val list = flinks.flatMap { url ->
-                SyndFeedInput().build(XmlReader(URL(url))).entries
-                        .map { entry ->
-                            Feed(url, entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
-                        }
+        val links = flinks.toMutableList()
+        val list: MutableList<Feed> = feedRepository.findByFeedLinkIn(links).toMutableList()
+        links.removeAll(list.map(Feed::feedLink).toSet())
+        val addLast = links.flatMap { url -> SyndFeedInput().build(XmlReader(URL(url))).entries
+                .map { entry ->
+                    Feed(url, entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
+                }
             }
-            feedRepository.save(list)
-            return list
-        }
+        list.addAll(addLast)
+        feedRepository.save(addLast)
+        return list
     }
 
     override fun searchFeeds(key: String): List<Container> {
