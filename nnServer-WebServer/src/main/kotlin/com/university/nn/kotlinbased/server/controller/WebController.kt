@@ -22,7 +22,7 @@ constructor(private val feedService: FeedService) {
 
     @PostMapping(path = arrayOf("/"))
     fun getFeeds(@ModelAttribute requestFeeds: RequestFeeds): HttpEntity<Any> {
-        if (requestFeeds.urls.size == 0) return ResponseEntity(HttpStatus.BAD_REQUEST)
+        if (requestFeeds.urls.isEmpty()) return ResponseEntity(HttpStatus.BAD_REQUEST)
         return ResponseEntity(Pagination.paginate(requestFeeds, feedService.getFeeds(requestFeeds.urls)), HttpStatus.OK)
     }
 
@@ -30,7 +30,7 @@ constructor(private val feedService: FeedService) {
     fun searchFeeds(@ModelAttribute requestSearch: RequestSearch): HttpEntity<Any> {
         if (requestSearch.key.isEmpty()) return ResponseEntity(HttpStatus.BAD_REQUEST)
         val response = feedService.searchFeeds(requestSearch.key)
-        if (response.isEmpty()) throw Exception() else return ResponseEntity(response, HttpStatus.OK)
+        if (response.feeds.isEmpty()) throw Exception() else return ResponseEntity(response, HttpStatus.OK)
     }
 
     @PostMapping(path = arrayOf("/pet"))

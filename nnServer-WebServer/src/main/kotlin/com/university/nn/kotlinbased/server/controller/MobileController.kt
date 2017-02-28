@@ -33,6 +33,6 @@ constructor(private val feedService: FeedService, val innUserRepository: INNUser
         if (requestSearch.key.isEmpty())
             return ResponseEntity(BAD_REQUEST)
         val response = feedService.searchFeeds(requestSearch.key)
-        if (response.isEmpty()) throw Exception() else return ResponseEntity(response, OK)
+        if (response.feeds.isEmpty()) throw Exception() else return ResponseEntity(response, OK)
     }
 }

@@ -3,8 +3,10 @@ package com.university.nn.kotlinbased.db.repository.impl
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import com.university.nn.kotlinbased.db.model.Feed
-import com.university.nn.kotlinbased.db.repository.FeedDao
+import com.university.nn.kotlinbased.db.model.Item
 import com.university.nn.kotlinbased.db.repository.FeedRepository
+import com.university.nn.kotlinbased.db.repository.ItemDao
+import com.university.nn.kotlinbased.db.repository.ItemRepository
 import com.university.nn.kotlinbased.utils.Container
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -14,30 +16,41 @@ import java.net.URL
 import java.util.*
 
 @Repository
-open class FeedDaoImpl
+open class ItemDaoImpl
 @Autowired
-constructor(val feedRepository: FeedRepository) : FeedDao {
+constructor(val itemRepository: ItemRepository, val feedRepository: FeedRepository) : ItemDao {
 
     companion object {
         val USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0"
     }
 
-    override fun getFeeds(flinks: List<String>): List<Feed> {
+    override fun getItems(flinks: List<String>): List<Item> {
         val links = flinks.toMutableList()
-        val list: MutableList<Feed> = feedRepository.findByFeedLinkIn(links).toMutableList()
-        links.removeAll(list.map(Feed::feedLink).toSet())
-        val addLast = links.flatMap { url -> SyndFeedInput().build(XmlReader(URL(url))).entries
-                .map { entry ->
-                    Feed(url, entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
-                }
-            }
+        val list: MutableList<Item> = itemRepository.findByFeedLinkIn(links).toMutableList()
+        links.removeAll(list.map(Item::feedLink).toSet())
+        val addLast = links.flatMap { url ->
+            SyndFeedInput().build(XmlReader(URL(url))).entries
+                    .map { entry ->
+                        Item(url, entry.title, entry.author, entry.link, entry.description.value, entry.publishedDate)
+                    }
+        }
         list.addAll(addLast)
-        feedRepository.save(addLast)
+        itemRepository.save(addLast)
         return list
     }
 
-    override fun searchFeeds(key: String): List<Container> {
-        val list = ArrayList<Container>()
+    override fun searchItems(key: String): Container {
+        val container: Container = Container()
+
+        val feed = feedRepository.findByKey(key)
+        if (feed!=null && feed.feeds.isNotEmpty()) {
+            with(container) {
+                container.iconUrl = feed.iconUrl
+                container.feeds = ArrayList(feed.feeds)
+            }
+            return container
+        }
+
         val baseUrl = "http://www.google.com/search?num=5&q=$key"
         val document = Jsoup.connect(baseUrl).userAgent(USER_AGENT).timeout(10000).get()
         val cite = document.getElementsByTag("cite")
@@ -47,7 +60,7 @@ constructor(val feedRepository: FeedRepository) : FeedDao {
             var url = cite
             if (!cite.contains("http"))
                 url = "http://$url"
-            val container: Container = Container()
+
             val doc = Jsoup.connect(url).userAgent(USER_AGENT).timeout(10000).get()
             val icon = doc.head().select("link[href~=.*\\.(ico|png)]").first()
             if (icon != null) {
@@ -60,9 +73,13 @@ constructor(val feedRepository: FeedRepository) : FeedDao {
             } else {
                 deepExtractFeed(container, doc)
             }
-            list.add(container)
+
         }
-        return list.filter { elem -> elem.feeds.size != 0 }
+
+        if (container.feeds.isNotEmpty())
+            feedRepository.save(Feed(key, container.iconUrl, container.feeds))
+
+        return container
     }
 
     private fun deepExtractFeed(container: Container, doc: Document) {

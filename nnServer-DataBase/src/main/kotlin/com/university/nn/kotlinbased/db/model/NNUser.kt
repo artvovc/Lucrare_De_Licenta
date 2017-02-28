@@ -4,7 +4,7 @@ import com.university.nn.kotlinbased.db.model.enums.Role
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document
+@Document(collection = "users")
 data class NNUser(@Id
                   var id: String?,
                   var firstname: String?,
