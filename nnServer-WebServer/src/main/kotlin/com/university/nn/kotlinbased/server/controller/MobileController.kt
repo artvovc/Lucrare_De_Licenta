@@ -1,6 +1,5 @@
 package com.university.nn.kotlinbased.server.controller
 
-import com.university.nn.kotlinbased.db.repository.FeedRepository
 import com.university.nn.kotlinbased.db.repository.INNUserRepository
 import com.university.nn.kotlinbased.db.request.RequestFeeds
 import com.university.nn.kotlinbased.db.request.RequestSearch
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,7 +24,7 @@ constructor(private val feedService: FeedService, val innUserRepository: INNUser
 
     @PostMapping(path = arrayOf("/"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
     fun getFeeds(@RequestBody requestFeeds: RequestFeeds): HttpEntity<Any> {
-        if (requestFeeds.urls.size == 0) return ResponseEntity(BAD_REQUEST)
+        if (requestFeeds.urls.isEmpty()) throw Exception()
         return ResponseEntity(paginate(requestFeeds, feedService.getFeeds(requestFeeds.urls)), OK)
     }
 

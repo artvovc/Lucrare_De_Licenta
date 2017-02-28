@@ -11,6 +11,7 @@ open class ControllerAdvice {
 
     @ExceptionHandler(Exception::class)
     fun exception(e: Exception): HttpEntity<Any> {
+        println(e)
         return ResponseEntity("""{"error":"feed was not found"}""", OK)
     }
 }
