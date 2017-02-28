@@ -24,11 +24,11 @@ public class JavaIT extends AbstractControllerIntegrationTest {
 
     @Test
     public void testatt() throws Exception {
-        MvcResult result = mockMvc.perform(get("/bye")
-                .contentType(APPLICATION_JSON)
-                .with(testSecurityContext()))
-                .andExpect(status().isOk())
-                .andReturn();
+//        MvcResult result = mockMvc.perform(get("/bye")
+//                .contentType(APPLICATION_JSON)
+//                .with(testSecurityContext()))
+//                .andExpect(status().isOk())
+//                .andReturn();
 //        assertThat(null,notNullValue());
     }
     @Test
