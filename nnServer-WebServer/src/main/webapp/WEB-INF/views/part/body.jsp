@@ -7,32 +7,12 @@
                 <tr>
                     <td>
                         <div class="frame">
-                            <iframe src="https://www.w3schools.com" width="100%" height="100%"></iframe>
+                            <iframe src="@" width="100%" height="100%"></iframe>
                         </div>
                     </td>
                     <td>
                         <div class="content">
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
-                            <h1>body</h1>
+
                         </div>
                     </td>
                 </tr>

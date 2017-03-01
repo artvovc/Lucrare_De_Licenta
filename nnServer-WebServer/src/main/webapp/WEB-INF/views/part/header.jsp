@@ -5,7 +5,8 @@
 <layout:extends name="base.jsp">
     <layout:put block="header">
         <div class="company">
-            <h1>Company
+            <h1>
+                Feedly
             </h1>
         </div>
         <div class="search-form">

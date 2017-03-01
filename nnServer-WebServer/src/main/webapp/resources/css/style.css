@@ -56,19 +56,19 @@ td.td-padding {
     padding: 5px;
 }
 
+iframe {
+    border: none;
+}
+
 .frame {
     position: absolute;
     margin-top: 5px;
     left: 0;
     top: 95px;
-    bottom: 45px;
+    bottom: 30px;
     width: 74.5%;
     background-color: rgba(0, 0, 0, 0.5);
     border: solid 1px rgba(200, 200, 200, 0.5);
-}
-
-iframe {
-    border: none;
 }
 
 .content {
@@ -78,7 +78,7 @@ iframe {
     position: absolute;
     right: 0;
     top: 95px;
-    bottom: 45px;
+    bottom: 30px;
     background-color: rgba(0, 0, 0, 0.5);
     border: solid 1px rgba(200, 200, 200, 0.5);
 }
