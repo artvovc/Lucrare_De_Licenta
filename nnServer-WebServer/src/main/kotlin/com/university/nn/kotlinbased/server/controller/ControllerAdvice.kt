@@ -2,7 +2,6 @@ package com.university.nn.kotlinbased.server.controller
 
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus.BAD_REQUEST
-import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler

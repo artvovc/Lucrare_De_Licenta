@@ -1,0 +1,61 @@
+html{
+    background: url("../images/background/background-image.jpg") center center fixed no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+header{
+    color: #ffffff;
+    background-color: #000000;
+    width: 100%;
+    position: fixed;
+    opacity: 0.5;
+}
+
+.search-form{
+    margin: 5px;
+    float: right;
+}
+
+main{
+    color: white;
+    padding: 50px 0;
+}
+
+footer{
+    position:absolute;
+    bottom:0;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#searchInput{
+    padding: 5px;
+    border: solid #ffffff 2px;
+    color: #ffffff;
+    background-color: rgba(50,50,50,1);
+}
+
+td{
+    padding: 5px;
+}
+
+.content{
+    overflow-y: auto;
+    margin-top: 5px;
+    width: 100%;
+
+    position:absolute;
+    top: 55px;
+    bottom:45px;
+    background-color: rgba(0,0,0,0.5);
+}
