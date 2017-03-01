@@ -4,14 +4,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <layout:extends name="base.jsp">
     <layout:put block="header">
+        <div class="company">
+            <h1>Company
+            </h1>
+        </div>
         <div class="search-form">
             <form:form method="POST" action="/search" modelAttribute="requestSearch">
                 <table>
                     <tr>
-                        <td>
+                        <td class="td-padding">
                             <form:input id="searchInput" path="key" placeholder="Input word key..."/>
                         </td>
-                        <td>
+                        <td class="td-padding">
                             <img src="<c:url value="/resources/images/search-icon.png"/>" width="25px"/>
                         </td>
                     </tr>

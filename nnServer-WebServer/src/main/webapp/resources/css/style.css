@@ -1,4 +1,4 @@
-html{
+html {
     background: url("../images/background/background-image.jpg") center center fixed no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -6,56 +6,79 @@ html{
     background-size: cover;
 }
 
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-header{
+header {
     color: #ffffff;
-    background-color: #000000;
+    background-color: rgba(0,0,0,0.5);
     width: 100%;
     position: fixed;
-    opacity: 0.5;
+    border: solid 1px rgba(200, 200, 200, 0.5);
 }
 
-.search-form{
+.search-form {
+    opacity: 0.75;
     margin: 5px;
     float: right;
 }
 
-main{
+.company {
+    opacity:1;
+    text-align: center;
+}
+
+main {
     color: white;
     padding: 50px 0;
 }
 
-footer{
-    position:absolute;
-    bottom:0;
+footer {
+    position: absolute;
+    bottom: 0;
     width: 100%;
     text-align: center;
     color: #ffffff;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid 1px rgba(200, 200, 200, 0.5);
 }
 
-#searchInput{
+#searchInput {
     padding: 5px;
     border: solid #ffffff 2px;
     color: #ffffff;
-    background-color: rgba(50,50,50,1);
+    background-color: rgba(50, 50, 50, 1);
 }
 
-td{
+td.td-padding {
     padding: 5px;
 }
 
-.content{
+.frame {
+    position: absolute;
+    margin-top: 5px;
+    left: 0;
+    top: 95px;
+    bottom: 45px;
+    width: 74.5%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid 1px rgba(200, 200, 200, 0.5);
+}
+
+iframe {
+    border: none;
+}
+
+.content {
     overflow-y: auto;
     margin-top: 5px;
-    width: 100%;
-
-    position:absolute;
-    top: 55px;
-    bottom:45px;
-    background-color: rgba(0,0,0,0.5);
+    width: 25%;
+    position: absolute;
+    right: 0;
+    top: 95px;
+    bottom: 45px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid 1px rgba(200, 200, 200, 0.5);
 }
