@@ -1,3 +1,7 @@
 *target/
 *.iml
 *.idea
+
+/nnServer-WebServer/src/main/webapp/resources/jquery/jquery-3.1.1.js
+/nnServer-WebServer/src/main/webapp/resources/images
+/nnServer-WebServer/src/main/webapp/resources/icon
