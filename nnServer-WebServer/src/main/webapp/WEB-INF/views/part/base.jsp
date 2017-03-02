@@ -9,7 +9,8 @@
     <title>Feedly</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/> "/>
     <link rel="icon" type="image/png" href="<c:url value="/resources/icon/web.png"/>"/>
-    <link type="text/javascript" href="<c:url value="/resources/jquery/jquery-3.1.1.js"/>"/>
+    <script src="<c:url value="/resources/javascript/jquery/jquery-3.1.1.min.js"/>"></script>
+    <script src="<c:url value="/resources/javascript/onReady.js"/>"></script>
 </head>
     <body>
         <header>

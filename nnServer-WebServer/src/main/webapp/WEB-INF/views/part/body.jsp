@@ -7,7 +7,7 @@
                 <tr>
                     <td>
                         <div class="frame">
-                            <iframe src="@" width="100%" height="100%"></iframe>
+                            <%--<iframe src="@" width="100%" height="100%"></iframe>--%>
                         </div>
                     </td>
                     <td>
