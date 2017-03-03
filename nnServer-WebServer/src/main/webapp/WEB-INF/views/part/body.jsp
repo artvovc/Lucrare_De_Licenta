@@ -23,13 +23,19 @@
                     <table>
                         <tr>
                             <td>
-                                <div class="frame">
-                                    <iframe src="@" width="100%" height="100%"></iframe>
+                                <div id="frameDiv" class="frame">
+                                    <iframe id="myFrame" src="" width="100%" height="100%"></iframe>
                                 </div>
                             </td>
                             <td>
                                 <div class="content">
-
+                                    <c:forEach var="item" items="${content.list}">
+                                        <div id="${item.link}" class="content-items" onclick="viewFrame(this)">
+                                            <div style="width: 100%; height: 25%; margin-bottom: 15px"><b>${item.title}</b></div>
+                                            <div style="width: 100%; height: 52%; margin-bottom: 15px; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">${item.description}</div>
+                                            <div style="width: 100%; height: 10%; text-align: right; margin-bottom: 15px">${item.author}</div>
+                                        </div>
+                                    </c:forEach>
                                 </div>
                             </td>
                         </tr>
