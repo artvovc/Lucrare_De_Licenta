@@ -17,7 +17,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <button id="addFeeds">Add</button>
+                    <button id="addFeeds" onclick="addFeeds()">Add</button>
                 </c:when>
                 <c:otherwise>
                     <table>
