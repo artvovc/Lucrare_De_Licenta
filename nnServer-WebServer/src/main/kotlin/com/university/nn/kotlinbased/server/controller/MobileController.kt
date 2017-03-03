@@ -1,5 +1,7 @@
 package com.university.nn.kotlinbased.server.controller
 
+import com.university.nn.kotlinbased.db.model.FeedData
+import com.university.nn.kotlinbased.db.repository.FeedDataRepository
 import com.university.nn.kotlinbased.db.repository.INNUserRepository
 import com.university.nn.kotlinbased.db.request.RequestFeeds
 import com.university.nn.kotlinbased.db.request.RequestSearch
@@ -12,9 +14,7 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping(path = arrayOf("/mo"))
@@ -35,4 +35,19 @@ constructor(private val feedService: FeedService, val innUserRepository: INNUser
         val response = feedService.searchFeeds(requestSearch.key)
         if (response.feeds.isEmpty()) throw Exception() else return ResponseEntity(response, OK)
     }
+
+    @GetMapping(path = arrayOf("/feeds/{tag}"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+    fun getCategory(@PathVariable tag: String): HttpEntity<Any> {
+        if (tag.isEmpty()) {
+            return ResponseEntity(BAD_REQUEST)
+        }
+        val response = feedService.findByTag(tag)
+        return ResponseEntity(response, OK)
+    }
+
+    @PostMapping(path = arrayOf("/feeds"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE), consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+    fun saveCategory(@RequestBody category: FeedData): HttpEntity<Any> {
+        return ResponseEntity(feedService.insertFeedData(category), OK)
+    }
+
 }
