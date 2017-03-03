@@ -4,7 +4,7 @@
 <%@ taglib uri="http://kwonnam.pe.kr/jsp/template-inheritance" prefix="layout" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="en" class="blur">
+<html lang="en">
 <head>
     <title>Feedly</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/> "/>

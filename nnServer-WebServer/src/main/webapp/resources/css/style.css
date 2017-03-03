@@ -1,5 +1,7 @@
 html {
-    background: url("../images/background/background-image.jpg") center center fixed no-repeat;
+
+    background: center center fixed no-repeat url("../images/background/background-image.jpg");
+    /*background: center center fixed no-repeat white;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -19,7 +21,6 @@ header {
 }
 
 .search-form {
-    opacity: 0.75;
     margin: 5px;
     float: right;
 }
@@ -63,7 +64,7 @@ iframe {
     margin-top: 5px;
     left: 0;
     top: 95px;
-    bottom: 30px;
+    bottom: 27px;
     width: 74.5%;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -75,6 +76,101 @@ iframe {
     position: absolute;
     right: 0;
     top: 95px;
-    bottom: 30px;
+    bottom: 27px;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.searchContent{
+    overflow-y: auto;
+    margin-top: 5px;
+    width: 93.5%;
+    position: absolute;
+    top: 95px;
+    bottom: 27px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 0 0 10px;
+}
+
+
+.back{
+    margin-top: 5px;
+    width: 5%;
+    position: absolute;
+    top: 95px;
+    bottom: 27px;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-right: solid 1px white;
+}
+
+
+.back:hover{
+    margin-top: 5px;
+    width: 5%;
+    position: absolute;
+    top: 95px;
+    bottom: 27px;
+    left: 0;
+    background-color: rgba(200, 200, 200, 0.5);
+    border-right: solid 1px white;
+}
+
+.back:active{
+    margin-top: 5px;
+    width: 5%;
+    position: absolute;
+    top: 95px;
+    bottom: 27px;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-right: solid 1px white;
+}
+
+img#back-icon{
+    position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
+button#addFeeds{
+    color: white;
+    border: solid white 1px;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+    position: fixed;
+    bottom: 40px;
+    right: 15px;
+    background: #45494A;
+}
+
+button#addFeeds:hover{
+    float: right;
+    color: black;
+    border: solid white 1px;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+    background: rgb(200, 200, 200);
+}
+
+button#addFeeds:active{
+    float: right;
+    color: white;
+    border: solid white 1px;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+    background: #45494A;
+}
+
+.check-box-feed{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.check-box-feed:hover{
+    background-color: rgb(100,100,100);
 }

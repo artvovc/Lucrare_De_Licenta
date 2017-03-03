@@ -4,6 +4,7 @@ import com.university.nn.kotlinbased.db.request.RequestFeeds
 import com.university.nn.kotlinbased.db.request.RequestSearch
 import com.university.nn.kotlinbased.db.response.Pagination
 import com.university.nn.kotlinbased.services.FeedService
+import com.university.nn.kotlinbased.utils.Container
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
@@ -20,23 +21,13 @@ class WebController
 @Autowired
 constructor(private val feedService: FeedService) {
 
-    @PostMapping(path = arrayOf("/"))
-    fun getFeeds(@ModelAttribute requestFeeds: RequestFeeds): HttpEntity<Any> {
-        if (requestFeeds.urls.isEmpty()) return ResponseEntity(HttpStatus.BAD_REQUEST)
-        return ResponseEntity(Pagination.paginate(requestFeeds, feedService.getFeeds(requestFeeds.urls)), HttpStatus.OK)
-    }
-
     @PostMapping(path = arrayOf("/search"))
-    fun searchFeeds(@ModelAttribute requestSearch: RequestSearch): HttpEntity<Any> {
-        if (requestSearch.key.isEmpty()) return ResponseEntity(HttpStatus.BAD_REQUEST)
-        val response = feedService.searchFeeds(requestSearch.key)
-        if (response.feeds.isEmpty()) throw Exception() else return ResponseEntity(response, HttpStatus.OK)
-    }
+    fun searchFeeds(@ModelAttribute requestSearch: RequestSearch, model: Model): ModelAndView {
 
-    @PostMapping(path = arrayOf("/pet"))
-    fun add(@ModelAttribute nnUser: RequestSearch): HttpEntity<String> {
-        println(nnUser)
-        return ResponseEntity("Yes", HttpStatus.OK)
+        model.addAttribute("requestSearch", RequestSearch())
+        model.addAttribute("container", feedService.searchFeeds(requestSearch.key))
+
+        return ModelAndView("index")
     }
 
     //TODO     http://stackoverflow.com/questions/22682566/spring-display-image-in-jsp-from-mongodb
@@ -44,6 +35,7 @@ constructor(private val feedService: FeedService) {
     fun getText(model: Model): ModelAndView {
 
         model.addAttribute("requestSearch", RequestSearch())
+        model.addAttribute("container", null)
 
         return ModelAndView("index")
     }
