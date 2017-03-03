@@ -77,7 +77,7 @@ iframe {
     right: 0;
     top: 95px;
     bottom: 27px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 .searchContent{
@@ -173,4 +173,8 @@ button#addFeeds:active{
 }
 .check-box-feed:hover{
     background-color: rgb(100,100,100);
+}
+
+.content-items{
+    border: 1px white solid; margin: 5px; padding: 5px; height: 200px;
 }

@@ -32,6 +32,7 @@ constructor(val itemRepository: ItemRepository, val feedRepository: FeedReposito
 
     companion object {
         val USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0"
+        val TIMEOUT = 10000
     }
 
     override fun getItems(flinks: List<String>): List<Item> {
@@ -62,7 +63,7 @@ constructor(val itemRepository: ItemRepository, val feedRepository: FeedReposito
         }
 
         val baseUrl = "http://www.google.com/search?num=5&q=$key"
-        val document = Jsoup.connect(baseUrl).userAgent(USER_AGENT).timeout(10000).get()
+        val document = Jsoup.connect(baseUrl).userAgent(USER_AGENT).timeout(TIMEOUT).get()
         val cite = document.getElementsByTag("cite")
                 .map { cite -> cite.html().replace("<b>|</b>".toRegex(), "") }
                 .filter { cite -> cite.matches(("""^(www|https://www|https://|https://blog)?[.]?$key.*[.](com|ru|en|md|ua).*""").toRegex()) && !cite.contains(("?")) }
@@ -71,7 +72,7 @@ constructor(val itemRepository: ItemRepository, val feedRepository: FeedReposito
             if (!cite.contains("http"))
                 url = "http://$url"
 
-            val doc = Jsoup.connect(url).userAgent(USER_AGENT).timeout(10000).get()
+            val doc = Jsoup.connect(url).userAgent(USER_AGENT).timeout(TIMEOUT).get()
             val icon = doc.head().select("link[href~=.*\\.(ico|png)]").first()
             if (icon != null) {
                 val iconlink = icon.attr("href")
@@ -98,7 +99,7 @@ constructor(val itemRepository: ItemRepository, val feedRepository: FeedReposito
                 .filter { href -> href.contains("feed".toRegex()) && !href.contains("feedback") && href.contains("http".toRegex()) && !href.contains("(yahoo|facebook|twitter)".toRegex()) }
         hrefs.forEach {
             href ->
-            val docFeed = Jsoup.connect(href).userAgent(USER_AGENT).timeout(10000).get()
+            val docFeed = Jsoup.connect(href).userAgent(USER_AGENT).timeout(TIMEOUT).get()
             if (docFeed.html().contains("application/rss+xml"))
                 container.feeds.add(href)
             else {
