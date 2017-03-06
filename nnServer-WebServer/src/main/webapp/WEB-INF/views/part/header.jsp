@@ -10,7 +10,7 @@
             </h1>
         </div>
         <div class="search-form">
-            <form:form method="POST" action="/serv/search" modelAttribute="requestSearch">
+            <form:form method="POST" action="/search" modelAttribute="requestSearch">
                 <table>
                     <tr>
                         <td class="td-padding">

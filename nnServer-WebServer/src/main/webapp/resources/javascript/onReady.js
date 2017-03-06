@@ -30,7 +30,7 @@ function addFeeds() {
 
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/serv/content");
+        form.setAttribute("action", "/content");
 
         var hiddenField = document.createElement("input");
         hiddenField.setAttribute("type", "hidden");

@@ -6,7 +6,7 @@
         <div>
             <c:choose>
                 <c:when test="${container!=null}">
-                    <a class="back" href="/serv/">
+                    <a class="back" href="/">
                         <img id="back-icon" src="<c:url value="/resources/images/back.png"/>" width="50%">
                     </a>
                     <div class="searchContent">
