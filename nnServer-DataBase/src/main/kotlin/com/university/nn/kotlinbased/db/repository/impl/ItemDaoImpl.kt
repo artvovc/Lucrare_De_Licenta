@@ -37,7 +37,7 @@ constructor(val itemRepository: ItemRepository, val feedRepository: FeedReposito
 
     override fun getItems(flinks: List<String>): List<Item> {
         val links = flinks.toMutableList()
-        val list: MutableList<Item> = itemRepository.findByFeedLinkIn(links).toMutableList()
+        val list: MutableList<Item> = itemRepository.findByFeedLinkInOrderByCreatedDateDesc(links).toMutableList()
         links.removeAll(list.map(Item::feedLink).toSet())
         val addLast = links.flatMap { url ->
             SyndFeedInput().build(XmlReader(URL(url))).entries

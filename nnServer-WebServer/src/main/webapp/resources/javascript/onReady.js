@@ -1,6 +1,4 @@
 $(function () {
-    // var storage = localStorage.getItem("feeds");
-    // console.log(storage);
 });
 
 function checkFunction(elem) {
@@ -32,7 +30,7 @@ function addFeeds() {
 
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/content");
+        form.setAttribute("action", "/serv/content");
 
         var hiddenField = document.createElement("input");
         hiddenField.setAttribute("type", "hidden");
