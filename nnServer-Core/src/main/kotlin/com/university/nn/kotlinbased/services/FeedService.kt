@@ -13,6 +13,13 @@ class FeedService
 constructor(private val itemDao: ItemDao) {
     fun getFeeds(urls: List<String>): List<Item> = itemDao.getItems(urls)
     fun searchFeeds(key: String): Container = itemDao.searchItems(key)
-    fun findByTag(tag: String): List<FeedData>{return itemDao.searchByTag(tag)}
-    fun insertFeedData(fedData: FeedData){itemDao.saveFeedData(fedData)}
+    fun findByTag(tag: String): List<FeedData> {
+        return itemDao.searchByTag(tag)
+    }
+
+    fun insertFeedData(fedData: FeedData) {
+        itemDao.saveFeedData(fedData)
+    }
+
+    fun getAllTags() = itemDao.getAllCategories()
 }

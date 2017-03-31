@@ -20,10 +20,14 @@ import java.util.*
 @Repository
 open class ItemDaoImpl
 @Autowired
-constructor(val itemRepository: ItemRepository, val feedRepository: FeedRepository,val feedDataRepository: FeedDataRepository) : ItemDao {
+constructor(val itemRepository: ItemRepository, val feedRepository: FeedRepository, val feedDataRepository: FeedDataRepository) : ItemDao {
 
     override fun searchByTag(tag: String): List<FeedData> {
-      return feedDataRepository.findByTags(tag)
+        return feedDataRepository.findByTags(tag)
+    }
+
+    override fun getAllCategories(): List<FeedData> {
+        return feedDataRepository.findAll().groupBy { it.tags[0] }.map { it -> it.value[0] }
     }
 
     override fun saveFeedData(fedData: FeedData) {
@@ -54,7 +58,7 @@ constructor(val itemRepository: ItemRepository, val feedRepository: FeedReposito
         val container: Container = Container()
 
         val feed = feedRepository.findByKey(key)
-        if (feed!=null && feed.feeds.isNotEmpty()) {
+        if (feed != null && feed.feeds.isNotEmpty()) {
             with(container) {
                 container.iconUrl = feed.iconUrl
                 container.feeds = ArrayList(feed.feeds)

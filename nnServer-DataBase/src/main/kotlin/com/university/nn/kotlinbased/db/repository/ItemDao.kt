@@ -9,4 +9,5 @@ interface ItemDao {
     fun searchItems(key: String): Container
     fun searchByTag(tag: String): List<FeedData>
     fun saveFeedData(fedData: FeedData)
+    fun getAllCategories(): List<FeedData>
 }

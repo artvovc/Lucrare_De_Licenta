@@ -1,7 +1,6 @@
 package com.university.nn.kotlinbased.server.controller
 
 import com.university.nn.kotlinbased.db.model.FeedData
-import com.university.nn.kotlinbased.db.repository.FeedDataRepository
 import com.university.nn.kotlinbased.db.repository.INNUserRepository
 import com.university.nn.kotlinbased.db.request.RequestFeeds
 import com.university.nn.kotlinbased.db.request.RequestSearch
@@ -42,6 +41,12 @@ constructor(private val feedService: FeedService, val innUserRepository: INNUser
             return ResponseEntity(BAD_REQUEST)
         }
         val response = feedService.findByTag(tag)
+        return ResponseEntity(response, OK)
+    }
+
+    @GetMapping(path = arrayOf("/feeds"), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+    fun getAllCategories(): HttpEntity<Any> {
+        val response = feedService.getAllTags()
         return ResponseEntity(response, OK)
     }
 
